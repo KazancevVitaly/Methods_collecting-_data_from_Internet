@@ -13981,12 +13981,6 @@ a.anchor-link {
 <li>B разобраться как вывести список репозиториев для конкретного пользователя, </li>
 <li>C сохранить JSON-вывод в файле *.json.</li>
 </ul>
-<h3 id="%D0%97%D0%B0%D0%B4%D0%B0%D1%87%D0%B0-2.">&#1047;&#1072;&#1076;&#1072;&#1095;&#1072; 2.<a class="anchor-link" href="#%D0%97%D0%B0%D0%B4%D0%B0%D1%87%D0%B0-2.">&#182;</a></h3><ul>
-<li>A Изучить список открытых API (<a href="https://www.programmableweb.com/category/all/apis">https://www.programmableweb.com/category/all/apis</a>). </li>
-<li>B Найти среди них любое, требующее авторизацию (любого типа). </li>
-<li>C Выполнить запросы к нему, пройдя авторизацию. </li>
-<li>D Ответ сервера записать в файл.</li>
-</ul>
 
 </div>
 </div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
@@ -14105,6 +14099,71 @@ a.anchor-link {
 <div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
      <div class="CodeMirror cm-s-jupyter">
 <div class=" highlight hl-ipython3"><pre><span></span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;repos.json&#39;</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">outfile</span><span class="p">:</span>
+    <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">r_json</span><span class="p">,</span> <span class="n">outfile</span><span class="p">)</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+</div>
+<div class="jp-Cell-inputWrapper"><div class="jp-InputPrompt jp-InputArea-prompt">
+</div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput " data-mime-type="text/markdown">
+<h3 id="%D0%97%D0%B0%D0%B4%D0%B0%D1%87%D0%B0-2.">&#1047;&#1072;&#1076;&#1072;&#1095;&#1072; 2.<a class="anchor-link" href="#%D0%97%D0%B0%D0%B4%D0%B0%D1%87%D0%B0-2.">&#182;</a></h3><ul>
+<li>A Изучить список открытых API (<a href="https://www.programmableweb.com/category/all/apis">https://www.programmableweb.com/category/all/apis</a>). </li>
+<li>B Найти среди них любое, требующее авторизацию (любого типа). </li>
+<li>C Выполнить запросы к нему, пройдя авторизацию. </li>
+<li>D Ответ сервера записать в файл.</li>
+</ul>
+
+</div>
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[7]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">APP_ID_VK</span> <span class="o">=</span> <span class="n">env</span><span class="p">(</span><span class="s1">&#39;APP_ID_VK&#39;</span><span class="p">)</span>
+<span class="n">VK_TOKEN</span> <span class="o">=</span> <span class="n">env</span><span class="p">(</span><span class="s1">&#39;VK_TOKEN&#39;</span><span class="p">)</span>
+<span class="n">USER_ID_VK</span> <span class="o">=</span> <span class="n">env</span><span class="p">(</span><span class="s1">&#39;USER_ID_VK&#39;</span><span class="p">)</span>
+<span class="n">URL_VK</span> <span class="o">=</span> <span class="p">(</span><span class="s1">&#39;https://api.vk.com/method/friends.get&#39;</span><span class="p">)</span>
+<span class="n">params</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s1">&#39;user_ids&#39;</span><span class="p">:</span> <span class="n">USER_ID_VK</span><span class="p">,</span>
+    <span class="s1">&#39;access_token&#39;</span><span class="p">:</span> <span class="n">VK_TOKEN</span><span class="p">,</span>
+    <span class="s1">&#39;fields&#39;</span><span class="p">:</span> <span class="s1">&#39;nickname&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;order&#39;</span><span class="p">:</span> <span class="s1">&#39;hints&#39;</span><span class="p">,</span>
+    <span class="s1">&#39;v&#39;</span><span class="p">:</span> <span class="mf">5.131</span>
+<span class="p">}</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[8]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="n">vk_response</span> <span class="o">=</span> <span class="n">requests</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="n">URL_VK</span><span class="p">,</span> <span class="n">params</span><span class="o">=</span><span class="n">params</span><span class="p">)</span>
+<span class="n">vk_json</span> <span class="o">=</span> <span class="n">vk_response</span><span class="o">.</span><span class="n">json</span><span class="p">()</span>
+</pre></div>
+
+     </div>
+</div>
+</div>
+</div>
+
+</div><div class="jp-Cell jp-CodeCell jp-Notebook-cell jp-mod-noOutputs  ">
+<div class="jp-Cell-inputWrapper">
+<div class="jp-InputArea jp-Cell-inputArea">
+<div class="jp-InputPrompt jp-InputArea-prompt">In&nbsp;[9]:</div>
+<div class="jp-CodeMirrorEditor jp-Editor jp-InputArea-editor" data-type="inline">
+     <div class="CodeMirror cm-s-jupyter">
+<div class=" highlight hl-ipython3"><pre><span></span><span class="k">with</span> <span class="nb">open</span><span class="p">(</span><span class="s1">&#39;vk_usersfriends.json&#39;</span><span class="p">,</span> <span class="s1">&#39;w&#39;</span><span class="p">)</span> <span class="k">as</span> <span class="n">outfile</span><span class="p">:</span>
     <span class="n">json</span><span class="o">.</span><span class="n">dump</span><span class="p">(</span><span class="n">r_json</span><span class="p">,</span> <span class="n">outfile</span><span class="p">)</span>
 </pre></div>
 
