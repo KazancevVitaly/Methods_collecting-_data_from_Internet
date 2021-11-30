@@ -1,5 +1,6 @@
 import scrapy
 from scrapy.http import HtmlResponse
+from jobparser.items import JobparserItem
 
 
 class SuperjobSpider(scrapy.Spider):
@@ -18,7 +19,11 @@ class SuperjobSpider(scrapy.Spider):
             yield response.follow(link, callback=self.vacancy_parse)
 
     def vacancy_parse(self, response: HtmlResponse):
-        print()
+        name = response.xpath('//h1//text()').getall()
+        salary = response.xpath('//span[@class="_1OuF_ ZON4b"]//text()').getall()
+        url = response.url
+
+        yield JobparserItem(name=name, salary=salary, url=url)
 
 
 
