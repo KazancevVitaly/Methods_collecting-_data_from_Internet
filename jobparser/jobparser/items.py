@@ -14,4 +14,4 @@ class JobparserItem(scrapy.Item):
     min_salary = scrapy.Field()
     max_salary = scrapy.Field()
     currency = scrapy.Field()
-    _id = scrapy.Field
+    _id = scrapy.Field()

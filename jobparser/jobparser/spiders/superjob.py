@@ -11,14 +11,14 @@ class SuperjobSpider(scrapy.Spider):
     ]
 
     def parse(self, response: HtmlResponse):
-        links = response.xpath('//a[contains(@class, "icMQ_ _6AfZ9")]/@href').getall()
-        for link in links:
-            # link = f'https://www.superjob.ru{link}'
-            yield response.follow(link, callback=self.job_parse)
         next_page = response.xpath('//a[contains(@class, "f-test-link-Dalshe")]/@href').get()
         # next_page = f'https://www.superjob.ru{next_page}'
         if next_page:
             yield response.follow(next_page, callback=self.parse)
+        links = response.xpath('//a[contains(@class, "icMQ_ _6AfZ9")]/@href').getall()
+        for link in links:
+            # link = f'https://www.superjob.ru{link}'
+            yield response.follow(link, callback=self.job_parse)
 
     def job_parse(self, response: HtmlResponse):
         print()
