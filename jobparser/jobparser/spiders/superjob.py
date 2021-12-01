@@ -1,5 +1,7 @@
 import scrapy
 from scrapy.http import HtmlResponse
+from jobparser.items import JobparserItem
+
 
 class SuperjobSpider(scrapy.Spider):
     name = 'superjob'
@@ -23,4 +25,6 @@ class SuperjobSpider(scrapy.Spider):
         name = response.xpath('//h1/text()').get()
         salary = response.xpath('//span[@class="_2Wp8I _1e6dO _1XzYb _3Jn4o"]/text()').getall()
         job_link = response.url
+
+        JobparserItem(name=name, salary=salary, job_link=job_link)
 
