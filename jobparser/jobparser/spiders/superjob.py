@@ -26,5 +26,5 @@ class SuperjobSpider(scrapy.Spider):
         salary = response.xpath('//span[@class="_2Wp8I _1e6dO _1XzYb _3Jn4o"]/text()').getall()
         job_link = response.url
 
-        JobparserItem(name=name, salary=salary, job_link=job_link)
+        yield JobparserItem(name=name, salary=salary, job_link=job_link)
 
