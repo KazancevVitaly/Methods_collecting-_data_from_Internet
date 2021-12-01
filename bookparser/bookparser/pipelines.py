@@ -17,7 +17,10 @@ class BookparserPipeline:
     def process_item(self, item, spider):
         print()
         if spider.name == 'labirint':
-            item['authors'].pop(0)
+            try:
+                item['authors'].pop(0)
+            except IndexError:
+                ''
             name = item['name'].split(': ')
             item['name'] = name[-1]
             final_price = self.process_price_labirint(item['price'])
@@ -44,8 +47,12 @@ class BookparserPipeline:
                 price_list.append(pr)
             except ValueError:
                 continue
-        discount = min(price_list)    # цена со скидкой
-        old_price = max(price_list)    # цена без скидки
+        try:
+            discount = min(price_list)    # цена со скидкой
+            old_price = max(price_list)    # цена без скидки
+        except ValueError:
+            discount = None
+            old_price = None
 
         return discount, old_price
 
@@ -60,9 +67,12 @@ class BookparserPipeline:
                 price_list.append(pr)
             except ValueError:
                 continue
-
-        discount = min(price_list)  # цена со скидкой
-        old_price = max(price_list)  # цена без скидки
+        try:
+            discount = min(price_list)  # цена со скидкой
+            old_price = max(price_list)  # цена без скидки
+        except ValueError:
+            discount = None
+            old_price = None
 
         return discount, old_price
 
