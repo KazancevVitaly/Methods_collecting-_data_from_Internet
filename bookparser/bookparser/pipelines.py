@@ -54,6 +54,7 @@ class BookparserPipeline:
         for pr in price:
             pr = pr.replace(u' ', u'')
             pr = pr.replace(u'₽', u'')
+            pr = pr.replace(u'\xa0', u'')
             try:
                 pr = int(pr)
                 price_list.append(pr)
