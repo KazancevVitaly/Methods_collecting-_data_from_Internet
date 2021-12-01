@@ -11,7 +11,8 @@ BOT_NAME = 'bookparser'
 
 SPIDER_MODULES = ['bookparser.spiders']
 NEWSPIDER_MODULE = 'bookparser.spiders'
-
+LOG_ENABLED = True
+LOG_LEVEL = 'DEBUG'
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 USER_AGENT = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/96.0.4664.45 Safari/537.36'
