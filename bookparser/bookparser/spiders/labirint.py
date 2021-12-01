@@ -13,7 +13,7 @@ class LabirintSpider(scrapy.Spider):
     ]
 
     def parse(self, response: HtmlResponse):
-        print()
+        # print()
         next_page = response.xpath('//a[@class="pagination-next__text"]/@href').get()
         if next_page:
             yield response.follow(next_page, callback=self.parse)
@@ -22,7 +22,7 @@ class LabirintSpider(scrapy.Spider):
             yield response.follow(link, callback=self.book_parser)
 
     def book_parser(self, response: HtmlResponse):
-        print()
+        # print()
         book_link = response.url
         name = response.xpath('//h1/text()').get()
         authors = response.xpath('//div[@class="authors"][1]//text()').getall()

@@ -12,4 +12,7 @@ class BookparserItem(scrapy.Item):
     authors = scrapy.Field()
     price = scrapy.Field()
     rate = scrapy.Field()
+    discount = scrapy.Field()
+    old_price = scrapy.Field()
+    _id = scrapy.Field()
 
