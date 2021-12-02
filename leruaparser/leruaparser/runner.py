@@ -10,6 +10,7 @@ if __name__ == '__main__':
     crawler_settings.setmodule(settings)
 
     crawler_process = CrawlerProcess(settings=crawler_settings)
-    # q = input()
-    crawler_process.crawl(ls)
+    # q = input('Укажите необходимый товар:\n')
+    q = 'Ель+искусственная'
+    crawler_process.crawl(ls, q=q)
     crawler_process.start()

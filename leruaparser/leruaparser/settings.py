@@ -14,6 +14,9 @@ NEWSPIDER_MODULE = 'leruaparser.spiders'
 LOG_ENABLED = True
 LOG_LEVEL = 'DEBUG'
 # LOG_FILE = 'log.txt'
+# IMAGES_STORE = 'photos'
+# FILES_STORE = 'files'
+# MEDIA_STORE = 'media'
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 #USER_AGENT = 'leruaparser (+http://www.yourdomain.com)'
@@ -66,6 +69,7 @@ COOKIES_ENABLED = True
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
    'leruaparser.pipelines.LeruaparserPipeline': 300,
+   'leruaparser.pipelines.LeruaPhotosPipeline': 200,
 }
 
 # Enable and configure the AutoThrottle extension (disabled by default)
