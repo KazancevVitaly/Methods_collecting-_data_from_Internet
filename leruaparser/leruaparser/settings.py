@@ -13,8 +13,8 @@ SPIDER_MODULES = ['leruaparser.spiders']
 NEWSPIDER_MODULE = 'leruaparser.spiders'
 LOG_ENABLED = True
 LOG_LEVEL = 'DEBUG'
-# LOG_FILE = 'log.txt'
-# IMAGES_STORE = 'photos'
+LOG_FILE = 'leroy_log.txt'
+IMAGES_STORE = 'photos'
 # FILES_STORE = 'files'
 # MEDIA_STORE = 'media'
 
@@ -68,8 +68,8 @@ COOKIES_ENABLED = True
 # Configure item pipelines
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
-   'leruaparser.pipelines.LeruaparserPipeline': 300,
-   'leruaparser.pipelines.LeruaPhotosPipeline': 200,
+    'leruaparser.pipelines.LeruaparserPipeline': 300,
+    'leruaparser.pipelines.LeruaPhotosPipeline': 200
 }
 
 # Enable and configure the AutoThrottle extension (disabled by default)

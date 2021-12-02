@@ -11,7 +11,6 @@ from itemadapter import ItemAdapter
 from scrapy.pipelines.images import ImagesPipeline
 from scrapy.utils.python import to_bytes
 from pymongo import MongoClient as mcl
-from hashlib import sha1
 
 
 class LeruaparserPipeline:
@@ -51,6 +50,7 @@ class LeruaPhotosPipeline(ImagesPipeline):
         return item
 
     def file_path(self, request, response=None, info=None, *, item=True):
+        print()
         image_guid = hashlib.sha1(to_bytes(request.url)).hexdigest()
         dir_name = item['name']
         return f'{dir_name}/{image_guid}.jpg'
