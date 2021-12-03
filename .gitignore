@@ -5,4 +5,4 @@ venv/
 __pycache__/
 TZ
 scrapy.cfg
-photos/
+*.jpg
