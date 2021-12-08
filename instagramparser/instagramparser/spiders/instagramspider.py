@@ -16,6 +16,12 @@ class InstagramspiderSpider(scrapy.Spider):
     link_authenticated = 'https://www.instagram.com/accounts/login/ajax/'
     LOGIN = env('LOGIN')
     PWD_HASH = env('PWD_HASH')
+    users = [
+        'codeclasskazan',
+        'veralutik25'
+    ]
+    friendships_link = 'https://i.instagram.com/api/v1/friendships/'
+    followers = 'followers/?'
 
     def parse(self, response: HtmlResponse):
         csrf = self.fetch_csrf_token(response.text)
@@ -31,7 +37,18 @@ class InstagramspiderSpider(scrapy.Spider):
         )
 
     def authenticated(self, response: HtmlResponse):
+        json_data = response.json()
+        if json_data.get('authenticated'):
+            for user in self.users:
+                yield response.follow(
+                    f'/{user}',
+                    callback=self.user_parse,
+                    cb_kwargs={'username': user}
+                )
+
+    def user_parse(self, response: HtmlResponse, username):
         print()
+        
 
     def fetch_csrf_token(self, text):
         ''' Get csrf-token for auth '''
