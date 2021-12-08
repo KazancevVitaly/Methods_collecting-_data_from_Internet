@@ -15,7 +15,7 @@ LOG_ENABLED = True
 LOG_LEVEL = 'DEBUG'
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
-#USER_AGENT = 'instagramparser (+http://www.yourdomain.com)'
+USER_AGENT = 'Instagram 155.0.0.37.107'
 
 # Obey robots.txt rules
 ROBOTSTXT_OBEY =False
