@@ -23,7 +23,7 @@ class InstagramspiderSpider(scrapy.Spider):
     ]
     friendships_link = 'https://i.instagram.com/api/v1/friendships/'
     followers = 'followers/?'
-    my_id = env('ID')
+    following = 'following/?'
 
     def parse(self, response: HtmlResponse):
         csrf = self.fetch_csrf_token(response.text)
@@ -50,9 +50,6 @@ class InstagramspiderSpider(scrapy.Spider):
 
     def user_parse(self, response: HtmlResponse, username):
         user_id = self.fetch_user_id(response.text, username)
-        # amount_subscribers = re.search('\"userInteractionCount\":\"\\d+\"', response.text).group()
-        # amount_subscribers = amount_subscribers.replace('"', '').split(':')
-        # amount_subscribers = int(amount_subscribers[1])
         subscribers_link = f'{self.friendships_link}{user_id}/{self.followers}count=12&search_surface=follow_list_page'
         yield response.follow(
             subscribers_link,
@@ -81,12 +78,50 @@ class InstagramspiderSpider(scrapy.Spider):
             )
         subscribers = subscribers_info.get('users')
         for subscriber in subscribers:
-            if subscriber['pk'] == self.my_id:
-                continue
             item = InstagramparserItem(
                 user_id=user_id,
                 username=username,
                 subscriber_id=subscriber['pk'],
+                subscriber_link=f'{self.start_urls[0]}{subscriber["username"]}',
+                subscriber_name=subscriber['full_name'],
+                subscriber_login=subscriber['username'],
+                subscriber_avatar_link=subscriber['profile_pic_url']
+            )
+            yield item
+        if not max_id:
+            users_subscribers_link = f'{self.friendships_link}{user_id}/{self.following}count=12'
+            yield response.follow(
+                users_subscribers_link,
+                callback=self.users_subscribers_parse,
+                cb_kwargs={
+                    'username': username,
+                    'user_id': user_id
+                }
+            )
+
+    def users_subscribers_parse(self, response: HtmlResponse, username, user_id):
+        print()
+        subscribers_info = json.loads(response.text)
+        try:
+            max_id = subscribers_info['next_max_id']
+        except KeyError:
+            max_id = False
+        if max_id:
+            next_page = f'{self.friendships_link}{user_id}/{self.following}count=12&max_id={max_id}'
+            yield response.follow(
+                next_page,
+                callback=self.subscribers_parse,
+                cb_kwargs={
+                    'username': username,
+                    'user_id': user_id
+                }
+            )
+        subscribers = subscribers_info.get('users')
+        for subscriber in subscribers:
+            item = InstagramparserItem(
+                user_id=user_id,
+                username=username,
+                subscriber_on_id=subscriber['pk'],
                 subscriber_link=f'{self.start_urls[0]}{subscriber["username"]}',
                 subscriber_name=subscriber['full_name'],
                 subscriber_login=subscriber['username'],

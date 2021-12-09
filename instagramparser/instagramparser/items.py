@@ -10,6 +10,7 @@ class InstagramparserItem(scrapy.Item):
     user_id = scrapy.Field()
     username = scrapy.Field()
     subscriber_id = scrapy.Field()
+    subscriber_on_id = scrapy.Field()
     subscriber_name = scrapy.Field()
     subscriber_login = scrapy.Field()
     subscriber_avatar_link = scrapy.Field()
