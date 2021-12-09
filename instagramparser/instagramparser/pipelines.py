@@ -13,13 +13,9 @@ class InstagramparserPipeline:
 
     def __init__(self):
         client = msl('localhost', 27017)
-        self.mongo_base = client.vacancies
+        self.mongo_base = client.instagram
 
     def process_item(self, item, spider):
         collection = self.mongo_base[spider.name]
-        if item.get('subscriber_id'):
-            collection.create_index('subscriber_id', unique=True)
-        else:
-            collection.create_index('subscriber_on_id', unique=True)
         collection.insert_one(item)
         return item

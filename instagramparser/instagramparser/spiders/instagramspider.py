@@ -85,7 +85,8 @@ class InstagramspiderSpider(scrapy.Spider):
                 subscriber_link=f'{self.start_urls[0]}{subscriber["username"]}',
                 subscriber_name=subscriber['full_name'],
                 subscriber_login=subscriber['username'],
-                subscriber_avatar_link=subscriber['profile_pic_url']
+                subscriber_avatar_link=subscriber['profile_pic_url'],
+                subscriber_on=False    # False если подписчик нашего usera и True если наш user подписан на него
             )
             yield item
         if not max_id:
@@ -110,7 +111,7 @@ class InstagramspiderSpider(scrapy.Spider):
             next_page = f'{self.friendships_link}{user_id}/{self.following}count=12&max_id={max_id}'
             yield response.follow(
                 next_page,
-                callback=self.subscribers_parse,
+                callback=self.users_subscribers_parse,
                 cb_kwargs={
                     'username': username,
                     'user_id': user_id
@@ -121,11 +122,12 @@ class InstagramspiderSpider(scrapy.Spider):
             item = InstagramparserItem(
                 user_id=user_id,
                 username=username,
-                subscriber_on_id=subscriber['pk'],
+                subscriber_id=subscriber['pk'],
                 subscriber_link=f'{self.start_urls[0]}{subscriber["username"]}',
                 subscriber_name=subscriber['full_name'],
                 subscriber_login=subscriber['username'],
-                subscriber_avatar_link=subscriber['profile_pic_url']
+                subscriber_avatar_link=subscriber['profile_pic_url'],
+                subscriber_on=True
             )
             yield item
 
