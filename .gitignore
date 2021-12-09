@@ -1,2 +1,8 @@
 venv/
 .idea/
+.env
+.ipynb_checkpoints/
+__pycache__/
+TZ
+scrapy.cfg
+*.jpg
